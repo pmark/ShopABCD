@@ -1,0 +1,55 @@
+!!!
+%html{:lang => "en"}
+  %head
+    %meta{:charset => "utf-8"}
+    %title Shop ABCD
+    %meta{:content => "width=device-width, initial-scale=1.0", :name => "viewport"}
+    %meta{:content => "shopabcd", :name => "description"}
+    %meta{:content => "P. Mark Anderson", :name => "author"}
+
+    %link{:href => "http://netdna.bootstrapcdn.com/twitter-bootstrap/2.2.1/css/bootstrap-combined.min.css", :rel => "stylesheet"}    
+    
+
+    %link{:href => "/css/site.css", :rel => "stylesheet"}
+    %script{:src => "http://code.jquery.com/jquery-1.8.3.min.js"}
+    %script{:src => "http://www.bendewey.com/code/formatcurrency/jquery.formatCurrency-1.4.0.js"}
+
+  / HTML5 shim, for IE6-8 support of HTML5 elements
+  /[if lt IE 9]
+    %script{:src => "http://html5shim.googlecode.com/svn/trunk/html5.js"}
+
+  %body
+    #wrap
+      .container
+        .page-header
+          %img{:src => "/img/women-computer-credit-card-300x267.jpg"}
+          %h1 Shop ABCD        
+        = yield
+      #push
+    #footer
+      .container
+        %p.muted.credit
+          %a{:href => "http://linkedin.com/in/pmark", :class => "icon"}
+            %img{:src => "https://si0.twimg.com/profile_images/2659634391/c17327f76b08a740e44aadb3151e48ad_bigger.png", :class => "avatar"}
+          Created by 
+          = succeed "." do
+            %a{:href => "http://linkedin.com/in/pmark"} P. Mark Anderson        
+          %br
+          Powered by
+          %span.label.label-info
+            Ruby
+          %span.label.label-info
+            Sinatra
+          %span.label.label-info
+            jQuery
+          %span.label.label-info
+            HAML
+          %span.label.label-info
+            Bootstrap
+          %span.label.label-warning
+            RedisToGo
+          %span.label.label-warning
+            AppFog
+
+
+    %script{:src => "http://netdna.bootstrapcdn.com/twitter-bootstrap/2.2.1/js/bootstrap.min.js"}

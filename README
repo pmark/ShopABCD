@@ -1,0 +1,116 @@
+Shop ABCD 
+By P. Mark Anderson
+
+This code sample demonstrates a basic point-of-sale scanning API that accepts an arbitrary ordering of products (similar to what would happen when actually at a checkout line) and returns the correct total price for an entire shopping cart based on the per unit prices or the volume prices as applicable.
+
+This implementation is written in Ruby and consists of four classes and a utility module. There are two ways to test this code as an API.
+
+1) Run the command line test program.
+
+    $ ruby cli/shop_abcd.rb
+
+
+2) Copy and paste the code in run_online/shop_abcd_combined.rb into this online Ruby editor.
+
+    http://www.compileonline.com/execute_ruby_online.php
+
+
+
+
+
+    http://shop.martianrover.com/
+
+
+
+
+
+Here is a sample execution of the POS terminal test program being run from the command line:
+
+$ ruby cli/shop_abcd.rb
+
+
+[SHOP] Welcome to Shop ABCD
+[SHOP] Initializing catalog
+
+[CATALOG] New product: A $1.25
+[CATALOG] New product: B $4.25
+[CATALOG] New product: C $1.00
+[CATALOG] New product: D $0.75
+[CATALOG] New discount: 3 product A for $3.00
+[CATALOG] New discount: 6 product C for $5.00
+
+
+- - - - - - - - - - - - - - - -
+[SHOP] Executing order 1: ABCDABA should be $13.25
+
+[ORDER] Added product: A
+[POS] TOTAL:  $1.25
+
+[ORDER] Added product: B
+[POS] TOTAL:  $5.50
+
+[ORDER] Added product: C
+[POS] TOTAL:  $6.50
+
+[ORDER] Added product: D
+[POS] TOTAL:  $7.25
+
+[ORDER] Added product: A
+[POS] TOTAL:  $8.50
+
+[ORDER] Added product: B
+[POS] TOTAL:  $12.75
+
+[ORDER] Added product: A
+[POS] SUBTOTAL:  $14.00
+[POS] DISCOUNT: -$0.75
+[POS] TOTAL:  $13.25
+
+
+
+- - - - - - - - - - - - - - - -
+[SHOP] Executing order 2: CCCCCCC should be $6.00
+
+[ORDER] Added product: C
+[POS] TOTAL:  $1.00
+
+[ORDER] Added product: C
+[POS] TOTAL:  $2.00
+
+[ORDER] Added product: C
+[POS] TOTAL:  $3.00
+
+[ORDER] Added product: C
+[POS] TOTAL:  $4.00
+
+[ORDER] Added product: C
+[POS] TOTAL:  $5.00
+
+[ORDER] Added product: C
+[POS] SUBTOTAL:  $6.00
+[POS] DISCOUNT: -$1.00
+[POS] TOTAL:  $5.00
+
+[ORDER] Added product: C
+[POS] SUBTOTAL:  $7.00
+[POS] DISCOUNT: -$1.00
+[POS] TOTAL:  $6.00
+
+
+
+- - - - - - - - - - - - - - - -
+[SHOP] Executing order 3: ABCD should be $7.25
+
+[ORDER] Added product: A
+[POS] TOTAL:  $1.25
+
+[ORDER] Added product: B
+[POS] TOTAL:  $5.50
+
+[ORDER] Added product: C
+[POS] TOTAL:  $6.50
+
+[ORDER] Added product: D
+[POS] TOTAL:  $7.25
+
+

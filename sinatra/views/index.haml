@@ -1,0 +1,170 @@
+
+%table
+  %tr
+    %th
+    %th
+    %th Item 
+    %th.left Price
+    %th Quantity
+    %th{:style => "width:60px;"}
+
+  - @products.values.each do |product|
+    %tr.product{:id => "product-#{product.name}", "data-price" => product.price}
+      %td.controls
+        %a.add_product{:href => "/add?product=#{product.name}", :rel => product.name}
+          %i.icon-plus-sign
+      %td.controls 
+        %a.remove_product{:href => "/remove?product=#{product.name}", :rel => product.name}
+          %i.icon-minus-sign
+      %td.name
+        = product.name
+      %td.left
+        = product.price_formatted
+        - discount = @discounts[product.name]
+        - if discount
+          or
+          = discount
+      %td.quantity
+        1
+      %td.price.right 
+        $0.00
+  %tr
+    %td &nbsp;
+    
+    
+  %tr
+    %td.right{:colspan => 5}
+      %small SUBTOTAL
+    %td#subtotal.right
+      $0.00
+  %tr
+    %td.right{:colspan => 5}
+      %small DISCOUNT
+    %td#discount.right
+      $0.00
+  %tr
+    %td.right{:colspan => 5}
+      %small TOTAL
+    %td#total.right
+      $0.00
+  %tr
+    %td{:colspan => 4}
+    %td.controls.right
+      %a.btn.btn-mini.reset{:href => "/reset"}
+        Reset
+
+:javascript
+  $(document).ready(function() 
+  {    
+      $(".add_product").click(fnAddItem);    
+      $(".remove_product").click(fnRemoveItem);      
+      $(".reset").click(fnReset);      
+      
+      updateTotals(#{@totals_json})
+  });
+  
+  function fnReset()
+  {
+    if (_requestActive)
+    {
+      return false;
+    }
+
+    setControlInteractionEnabled(false);
+    
+    $.ajax({
+      type: "GET",
+      cache: false,
+      url: "/reset"
+    }).done(function ( data ) {
+      updateTotals(data)
+      setControlInteractionEnabled(true);
+    });
+
+    return false;      
+  }  
+  
+  function fnAddItem()
+  {
+    if (_requestActive)
+    {
+      // console.log("waiting")
+      return false;
+    }
+    
+
+    setControlInteractionEnabled(false);
+    var productName = $(this).attr("rel");      
+    
+    // console.log("Adding ", productName)
+
+    $.ajax({
+      type: "GET",
+      cache: false,
+      url: "/add",
+      data: { "product": productName }
+    }).done(function ( data ) {
+      updateTotals(data)
+      setControlInteractionEnabled(true);
+    });
+
+    return false;      
+  }  
+  
+  function fnRemoveItem()
+  {
+    if (_requestActive)
+      return false;
+      
+    setControlInteractionEnabled(false);
+    var productName = $(this).attr("rel");      
+
+    // console.log("Removing ", productName)
+
+    $.ajax({
+      type: "GET",
+      cache: false,
+      url: "/remove",
+      data: { "product": productName }
+    }).done(function ( data ) {
+      updateTotals(data)
+      setControlInteractionEnabled(true);
+    });
+
+    return false;      
+  }
+  
+  function updateTotals(data)
+  {
+    $("#total").html(data["total"])
+    $("#subtotal").html(data["subtotal"])
+    $("#discount").html(data["discount"])    
+    
+    $(".product").each(function(index, tr) 
+    {
+      productName = $(this).attr("id").replace("product-", '');
+      productPrice = $(this).attr("data-price");
+
+      newQuantity = data["product_counts"][productName];
+      newPrice = (productPrice * newQuantity);
+
+      $(this).children(".quantity").html(newQuantity);
+      $(this).children(".price").html(newPrice).formatCurrency();
+    })
+  }
+  
+  var _requestActive = false;
+  
+  function setControlInteractionEnabled(enabled)
+  {
+    _requestActive = !enabled;
+
+    if (enabled)
+    {
+      $(".controls i").removeClass("disabled")      
+    }
+    else
+    {
+      $(".controls i").addClass("disabled")      
+    }
+  }
