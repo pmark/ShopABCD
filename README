@@ -15,16 +15,17 @@ This implementation is written in Ruby and consists of four classes and a utilit
     http://www.compileonline.com/execute_ruby_online.php
 
 
+BONUS
 
-
+On reading the instructions again I noticed that they clearly state not to spend time on a UI. I certainly want to follow direction, but after completing the command line implementation I knew that making this code a Sinatra app hosted on AppFog with a Redis backend was a fairly minor task, so here's an additional way to test my work.
 
     http://shop.martianrover.com/
 
 
+Below is a sample execution of the POS terminal test program being run from the command line. Thanks for your time!
+Mark
 
 
-
-Here is a sample execution of the POS terminal test program being run from the command line:
 
 $ ruby cli/shop_abcd.rb
 
